@@ -5,23 +5,29 @@ public class RecursiveFunctions {
 
 	/**
 	 * A method that evaluates an exponent recursively
+	 * Uses the equality x^y = (x^2)^(y/2)
 	 * only works with integers
 	 * @param base
 	 * @param exponent
 	 * @return
 	 */
-	public static int power(int base, int exponent)
+	public static int power (int base, int exponent)
 	{
 		int exp = exponent;
+		int solution = 0;
 
-		if (base == 0)
-			return 0;
 		if (exp == 0)
-			return 1;
+			solution = 1;
+		if (base == 0)
+			solution = 0;
 		if (exp == 1)
-			return base;
-		else
-			return multiplication( power( base, exp - 1), base);
+			solution = base;
+		else if ( exp % 2 == 0)
+			solution = power ( base * base, exp / 2);
+		else if ( exp % 2 != 0)
+			solution = power ( base * base * base, exp / 2); // if the exponent is odd multiply by base three times
+
+		return solution;
 	}
 
 	/**
@@ -40,7 +46,8 @@ public class RecursiveFunctions {
 		if (x == 1)
 			return y;
 		else
-			return multiplication(x, y - 1) +x;
+			return multiplication(x, y - 1) + x;
+
 	}
 
 	/**
@@ -63,7 +70,11 @@ public class RecursiveFunctions {
 		return c;
 	}
 
-	//TODO: create a method to revere a string using recursive calls
+	/**
+	 *
+	 * @param input
+	 * @return
+	 */
 	public static String reverseString (String input)
 	{
 		int size = input.length();
@@ -75,20 +86,20 @@ public class RecursiveFunctions {
 			return input;
 		else
 		{
-			for (int i = 0; i < size - 2; i++)
-			{
-				tempArray[i] = input.charAt(i);
-			}
-			String tempString = new String(tempArray);
-			return input.charAt(size - 1) + tempString;
+			String tempString = input.replaceAll(String.valueOf(size - 1), "");
+			return input.charAt(size - 1) + reverseString(tempString);
 		}
-
 
 	}
 
-	//TODO: create a method to find the length of a linked list using recursive calls
+
 //    public int linkedListLength () {
-//
+//		if (n == null)
+//			return 0;
+//		if (n.next == null)
+//			return 1;
+//		else
+//			return linkedListLength(n.next) + 1;
 //    }
 
 }
